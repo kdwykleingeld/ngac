@@ -1,0 +1,26 @@
+Name;Labels;Data Source;Status
+o1;Object;testngac;active
+o2;Object;testngac;active
+o3;Object;testngac;active
+o4;Object;testngac;active
+o5;Object;testngac;active
+oa1;ObjectAttribute;testngac;active
+oa2;ObjectAttribute;testngac;active
+oa3;ObjectAttribute;testngac;active
+oa4;ObjectAttribute;testngac;active
+oa5;ObjectAttribute;testngac;active
+oa6;ObjectAttribute;testngac;active
+oa7;ObjectAttribute;testngac;active
+oa8;ObjectAttribute;testngac;active
+oa9;ObjectAttribute;testngac;active
+oa10;ObjectAttribute;testngac;active
+pc1;PolicyClass;testngac;active
+pc2;PolicyClass;testngac;active
+u1;User;testngac;active
+u2;User;testngac;active
+u3;User;testngac;active
+u4;User;testngac;active
+ua1;UserAttribute;testngac;active
+ua2;UserAttribute;testngac;active
+ua3;UserAttribute;testngac;active
+ua4;UserAttribute;testngac;active
