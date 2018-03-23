@@ -140,7 +140,8 @@ Label Propagation report
 
     // Label Propagation Report
     CALL algo.labelPropagation()
-    YIELD nodes, iterations, didConverge, loadMillis, computeMillis, writeMillis, write, weightProperty, partitionProperty
+    YIELD nodes, iterations, didConverge, loadMillis, computeMillis, writeMillis, write,
+    weightProperty, partitionProperty
     //
     MATCH (n)
     WITH n
