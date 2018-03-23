@@ -1,15 +1,21 @@
 # ngac - Next Generation Access Control
 This is the Readme file for a prototype for a NGAC (Next Generation Access Control) limited scale prototype based on neo4j.
 
-Nodes
+Based on Neo4j 3.3.4.
+
+Requires the APOC and Graph Alogroritms Libraries.
+
+Implemented node types and properties:
 - User
 - UserAttribute
 - Object
 - ObjectAttribute
 - PolicyClass
 
-- Relationships
+Implemented relationship types:
 - ASSIGNED_TO
+-- bla
+-- bla
 - ASSOCIATED_TO
 - PROHIBITION_ON
 
@@ -24,4 +30,7 @@ The xx.xql file contains Cypher Commands to:
 7. Closeness
 8. Betweenness
 
+The ngac_nodes.csv file contains nodes to be imported
+The ngac_relationships file containes relationships to be imported
 
+Both files must be placed in the Neo4j import directory
