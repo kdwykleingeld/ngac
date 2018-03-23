@@ -14,13 +14,12 @@ Implemented node types and properties:
 
 Implemented relationship types:
 - ASSIGNED_TO
--- bla
--- bla
 - ASSOCIATED_TO
 - PROHIBITION_ON
 
-The xx.xql file contains Cypher Commands to:
+Files:
 
+- xx.xql file contains Cypher Commands to:
 1. Create Indices
 2. Load Nodes
 3. Load Relationships
@@ -30,7 +29,9 @@ The xx.xql file contains Cypher Commands to:
 7. Closeness
 8. Betweenness
 
-The ngac_nodes.csv file contains nodes to be imported
-The ngac_relationships file containes relationships to be imported
+- ngac_nodes.csv file contains nodes to be imported
+- ngac_relationships file containes relationships to be imported
 
 Both files must be placed in the Neo4j import directory
+
+Labels: IAM Identity Access Management ABAC NGAC Attribute Based Access Control Neo4j Cypher Authorization PDP PAP PIP EPP
