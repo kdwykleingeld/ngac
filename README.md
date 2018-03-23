@@ -24,6 +24,6 @@ Files:
 - ngac_nodes.csv: contains nodes to be imported
 - ngac_rels:      containes relationships to be imported
 - datamodel.jpg:  the datamodel
-- data.jpg:       visual overview of the data
+- testdata.jpg:   visual overview of the data
 
 Both ngac_nodes.csv and ngac_rels.csv must be placed in the Neo4j import directory.
