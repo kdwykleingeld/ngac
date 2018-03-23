@@ -36,3 +36,33 @@ Installation:
 5) start neo4j and open browser
 6) run the cyppher code snippits from the ngac.cql file   (one part at the time) through the browser to create indices, import data, set analytical properties and run some permission queries
 
+Create Indices:
+
+    // Define Indexes and Constraints
+    // User;UserAttribute;ObjectAttribute;PolicyClass;Object
+    CALL apoc.schema.assert({},{
+     User:['name'],
+     UserAttribute:['name'],
+     ObjectAttribute:['name'],
+     PolicyClass:['name'],
+     Object:['name']
+    });
+    
+Load Nodes:
+
+    // Create Nodes
+    // Name;Labels;Data Source;Status
+    USING PERIODIC COMMIT
+    LOAD CSV WITH HEADERS
+    FROM 'file:///ngac_nodes.csv' AS line FIELDTERMINATOR ';'
+    //
+    MERGE (n { name: line.`Name`, labels: line.`Labels`, datasource: line.`Data Source`, status: line.`Status`})
+    with n,line
+    //
+    MATCH (n)
+    call apoc.create.addLabels([ id(n) ], [ n.labels ]) yield node
+    set n.uuid = apoc.create.uuid()
+    set n.created = apoc.date.currentTimestamp()
+    with node
+    remove node.labels
+
