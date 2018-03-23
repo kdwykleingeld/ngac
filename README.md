@@ -34,7 +34,7 @@ Installation:
 3) install apoc and graph algorithms plugins
 4) place ngac_nodes.csv and ngac_rels.csv in the Neo4j import directory
 5) start neo4j and open browser
-6) run the cyppher code snippits from the ngac.cql file   (one part at the time) through the browser to create indices, import data, set analytical properties and run some permission queries
+6) run the cypher code snippits from the ngac.cql file   (one part at the time) through the browser to create indices, import data, set analytical properties and run some permission queries
 
 Create Indices:
 
@@ -176,7 +176,7 @@ Query Permissions for all users
     	COLLECT(DISTINCT oa.name) AS ObjectAttributes,
     	COLLECT(DISTINCT opc.name) AS ObjectPolicyClasses,
     	COLLECT(DISTINCT oapc.name) AS ObjectAttributePolicyClasses
-        WHERE ObjectPolicyClasses = ObjectAttributePolicyClasses AND ([item in Permissions WHERE NOT item in Prohibitions] OR Prohibitions IS         NULL)
+        WHERE ObjectPolicyClasses = ObjectAttributePolicyClasses AND ([item in Permissions WHERE NOT item in Prohibitions] OR Prohibitions IS NULL)
     RETURN Users, Permissions, Objects, Prohibitions, [item in Permissions WHERE NOT item in Prohibitions] as SubSet,
         CASE WHEN Prohibitions IS NULL THEN Permissions 
              ELSE [item in Permissions WHERE NOT item in Prohibitions] END as ResultingPermission       
