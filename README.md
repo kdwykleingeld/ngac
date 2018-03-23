@@ -1,10 +1,12 @@
-# NGAC - Next Generation Access Control - Policy Information Point
+# NGAC - Next Generation Access Control - Policy Information Point (PIP)
 
-This is the readme file for a small prototype for a Policy Information Point (PIP) for Next Generation Access Control (NGAC) based on standards produced by INCITS with Neo4j as Propert Graph NOSQL DBMS an the Cypher Query Language to load data and perform some analytics and authorization querties.
+This is the readme file for a small prototype for a Policy Information Point (PIP) for Next Generation Access Control (NGAC). NGAC is a Attribute Based Access Control (ABAC) standard described by INCITS (499 - Functional Architecture).
+
+This prototype is based on Neo4j to implement the directed Property Graph and the Cypher Query Language to load data and perform some analytics and authorization permission queries.
 
 NGAC is based on Attribute Based Access Control (ABAC) Principles and part of the Identity & Access Management (IAM) Security Domain implementing support for Fine-Grained Authorization Services.
 
-This prootype is based on Neo4j 3.3.4 and makes use of Neo4j APOC and Graph Alogroritms plugin Libraries.
+This prototype is based on Neo4j 3.3.4 and makes use of Neo4j APOC and Graph Alogroritms plugin Libraries.
 
 Implemented node types and properties:
 - User
@@ -26,4 +28,11 @@ Files:
 - datamodel.jpg:  the datamodel
 - testdata.jpg:   visual overview of the data
 
-Both ngac_nodes.csv and ngac_rels.csv must be placed in the Neo4j import directory.
+Installation:
+1) install neo4j 3.3.4
+2) create database
+3) install apoc and graph algorithms plugins
+4) place ngac_nodes.csv and ngac_rels.csv in the Neo4j import directory
+5) start neo4j and open browser
+6) run the cyppher code snippits from the ngac.cql file   (one part at the time) through the browser to create indices, import data, set analytical properties and run some permission queries
+
