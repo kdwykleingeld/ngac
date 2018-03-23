@@ -1,5 +1,8 @@
-# ngac - Next Generation Access Control
-This is the Readme file for a prototype for a NGAC (Next Generation Access Control) limited scale prototype based on neo4j.
+# NGAC - Next Generation Access Control
+# ABAC - Attribute Based Access Control
+# IAM - Identity & Access Management
+
+This is the readme file for a small prototype for a Policy Information Point (PIP) for Next Generation Access Control (NGAC) based on standards produced by INCITS with Neo4j as Propert Graph NOSQL DBMS an the Cypher Query Language to load data and perform some analytics and authorization querties.
 
 Based on Neo4j 3.3.4.
 
