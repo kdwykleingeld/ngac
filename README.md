@@ -6,7 +6,7 @@ This prototype is based on Neo4j to implement the directed Property Graph and th
 
 NGAC is based on Attribute Based Access Control (ABAC) Principles and part of the Identity & Access Management (IAM) Security Domain implementing support for Fine-Grained Authorization Services.
 
-This prototype is based on Neo4j 3.3.4 and makes use of Neo4j APOC and Graph Alogroritms plugin Libraries. Data can be streamed to Gephi for visualization purpose.
+This prototype is based on Neo4j 3.3.4 and makes use of Neo4j APOC and Graph Alogroritms plugin Libraries. Data can be streamed to Gephi for visualization purpose. This requires Gephi 0.9.2 to be installed with the Streaming plugin configured for http://localhost:7474 (when installed on same system as Neo4j).
 
 Implemented node types and properties:
 - User
