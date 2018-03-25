@@ -22,11 +22,12 @@ Implemented relationship types:
 
 Files:
 
-- ngac.xcl file:  contains Cypher Commands to create indices, nodes , relationships, analytical data and authorization quieries
-- ngac_nodes.csv: contains nodes to be imported
-- ngac_rels:      containes relationships to be imported
-- datamodel.jpg:  the datamodel
-- testdata.jpg:   visual overview of the data
+- ngac.xcl file:    contains Cypher Commands to create indices, nodes , relationships, analytical data and authorization quieries
+- ngac_nodes.csv:   contains nodes to be imported
+- ngac_rels:        containes relationships to be imported
+- datamodel.jpg:    the datamodel
+- testdata.jpg:     visual overview of the data
+- epp bnf ngac.txt: bnf grammer notation for event processing patterns
 
 Installation:
 1) install neo4j 3.3.4
