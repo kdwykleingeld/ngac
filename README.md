@@ -1,6 +1,10 @@
 # NGAC - Next Generation Access Control - Policy Information Point (PIP)
 
-This is the readme file for a small prototype for a Policy Information Point (PIP) for Next Generation Access Control (NGAC). NGAC is a Attribute Based Access Control (ABAC) standard described by INCITS (499 - Functional Architecture).
+This is the readme file for a small prototype for a Policy Information Point (PIP) for Next Generation Access Control (NGAC). NGAC is a Attribute Based Access Control (ABAC) standard described by ANDI/INCITS. Standards documentation includes:
+
+- INCITS 499 - NGAC Functional Architecture
+- INCITS 525 - NGAC Implementation Requirements, Protocols and API Definitions
+- INCITS 562 - NGAC Generic Operations and Data Structures
 
 This prototype is based on Neo4j to implement the directed Property Graph and the Cypher Query Language to load data and perform some analytics and authorization permission queries.
 
