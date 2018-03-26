@@ -49,7 +49,7 @@ Create Indices:
      Object:['name']
     });
     
-Import nodes:
+Import Nodes:
 
     // Create Nodes
     // Name;Labels;Data Source;Status
@@ -67,7 +67,7 @@ Import nodes:
     with node
     remove node.labels
 
-Import relationships:
+Import Relationships:
 
     // Create Relationships
     // From Node;Relationship Type;To Node;Permission;Data Source;Status;Weight
@@ -89,14 +89,14 @@ Import relationships:
     
     // Set degree, indegree, outdegree properties on all nodes
     
-Set Degree Property
+Set Degree Property on all nodes
 
     MATCH (n)
     WITH n,length((n)-->()) AS outdegrees, length((n)<--()) AS indegrees
     SET n.indegree = indegrees, n.outdegree = outdegrees, n.degree = indegrees+outdegrees
     SET n.modified = apoc.date.currentTimestamp()
 
-Set PageRank property
+Set PageRank property on all nodes
 
     // Set pagerank property on all nodes
     CALL algo.pageRank(null,null, {iterations:20, dampingFactor:0.85,
@@ -105,7 +105,7 @@ Set PageRank property
     MATCH (n)
     SET n.modified = apoc.date.currentTimestamp()
 
-Set Betweenness property
+Set Betweenness property on all nodes
 
     // Set betweenness property on all nodes
     CALL algo.betweenness(null, null, {direction:'out',write:true, writeProperty:'betweenness'})
@@ -113,7 +113,7 @@ Set Betweenness property
     MATCH (n)
     SET n.modified = apoc.date.currentTimestamp()
 
-Set Closeness property
+Set Closeness property on all nodes
 
     // Set closeness property on all nodes
     CALL algo.closeness(null, null , {write:true, writeProperty:'closeness'})
@@ -121,7 +121,7 @@ Set Closeness property
     MATCH (n)
     SET n.modified = apoc.date.currentTimestamp()
 
-Set Component property
+Set Component property on all nodes
 
     // Set component property on all nodes
     CALL algo.unionFind(null, null, {write:true, partitionProperty:"component"})
@@ -129,7 +129,7 @@ Set Component property
     MATCH (n)
     SET n.modified = apoc.date.currentTimestamp()
 
-Set Connected property
+Set Connected property on all nodes
 
     // Set connected property on all nodes
     CALL algo.scc(null, null, {write:true,partitionProperty:'connected'})
@@ -137,7 +137,7 @@ Set Connected property
     MATCH (n)
     SET n.modified = apoc.date.currentTimestamp()
 
-Label Propagation report
+Run Label Propagation report
 
     // Label Propagation Report
     CALL algo.labelPropagation()
@@ -152,7 +152,7 @@ Label Propagation report
     RETURN pages[0] AS mainPage, pages[1..999] AS otherPages, partition, clusterSize
     ORDER BY clusterSize DESC
 
-Node Analytics report
+Run Node Network Analytics report
 
     // Create Node Report
     MATCH (n)
