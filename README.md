@@ -26,7 +26,7 @@ Implemented relationship types:
 
 Files:
 
-- ngac.xcl file:    contains Cypher Commands to create indices, nodes , relationships, analytical data and authorization quieries
+- ngac.cql file:    contains Cypher Commands to create indices, nodes , relationships, analytical data and authorization quieries
 - ngac_nodes.csv:   contains nodes to be imported
 - ngac_rels:        containes relationships to be imported
 - datamodel.jpg:    the datamodel
@@ -168,25 +168,27 @@ Run Node Network Analytics report
 
 Query Permissions for all users
 
-    // Query Permissions WITH Prohibitions 
-    MATCH (u:User)-[:ASSIGNED_TO*]->(ua:UserAttribute)-[r:ASSOCIATED_TO]->(oa:ObjectAttribute)
+    // Query NGAC Permissions WITH Prohibitions 
+    MATCH (u:User)-[:ASSIGNED_TO|ASSOCIATED_TO*]->(ua:UserAttribute)-[r:ASSOCIATED_TO]->(oa:ObjectAttribute)
     MATCH (oa)<-[:ASSIGNED_TO*]-(o:Object)
     MATCH (o)-[:ASSIGNED_TO*]->(opc:PolicyClass)
     MATCH (oa)-[:ASSIGNED_TO*]->(oapc:PolicyClass)
     OPTIONAL MATCH (u)-[p:PROHIBITION_ON]->(o)
-    WITH
-    	u.name AS Users,
+    WITH 	
+        u.name AS Users,
     	o.name AS Objects,
-        SPLIT(p.permission, ',') AS Prohibitions,
-    	SPLIT(r.permission, ',') AS Permissions,
+        COLLECT(DISTINCT SPLIT(p.permission, ',')) AS Prohibitions,
+    	COLLECT(DISTINCT SPLIT(r.permission, ',')) AS Permissions,
     	COLLECT(DISTINCT oa.name) AS ObjectAttributes,
     	COLLECT(DISTINCT opc.name) AS ObjectPolicyClasses,
     	COLLECT(DISTINCT oapc.name) AS ObjectAttributePolicyClasses
         WHERE ObjectPolicyClasses = ObjectAttributePolicyClasses AND ([item in Permissions WHERE NOT item in Prohibitions] OR Prohibitions IS NULL)
-    RETURN Users, Permissions, Objects, Prohibitions, [item in Permissions WHERE NOT item in Prohibitions] as SubSet,
-        CASE WHEN Prohibitions IS NULL THEN Permissions 
-             ELSE [item in Permissions WHERE NOT item in Prohibitions] END as ResultingPermission       
-    ORDER BY Users, Objects
+    	WITH Users, Objects, reduce(result=HEAD(Permissions), s in TAIL(Permissions) | result+s) as CombinedPermissions,
+    	reduce(result1=HEAD(Prohibitions), s in TAIL(Prohibitions) | result1+s) as CombinedProhibitions
+        RETURN Users, CombinedPermissions, Objects, CombinedProhibitions,
+        CASE WHEN CombinedProhibitions IS NULL THEN CombinedPermissions
+             ELSE [item in CombinedPermissions WHERE NOT item IN CombinedProhibitions] END AS ResultingPermission       
+        ORDER BY Users, Objects
 
 Stream data to Gephi
 
