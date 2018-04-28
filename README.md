@@ -1,4 +1,4 @@
-# NGAC - Next Generation Access Control - Policy Information Point (PIP)
+# NGAC - Next Generation Access Control - Policy Information Point (PIP) / Policy Administration Point (PAP)
 
 This is the readme file for a small prototype for a Policy Information Point (PIP) for Next Generation Access Control (NGAC). NGAC is a Attribute Based Access Control (ABAC) standard described by ANDI/INCITS. Standards documentation includes:
 
