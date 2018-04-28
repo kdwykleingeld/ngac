@@ -10,7 +10,7 @@ This prototype is based on Neo4j to implement the directed Property Graph and th
 
 NGAC is based on Attribute Based Access Control (ABAC) Principles and part of the Identity & Access Management (IAM) Security Domain implementing support for Fine-Grained Authorization Services.
 
-This prototype is based on Neo4j 3.3.4 and makes use of Neo4j APOC and Graph Alogroritms plugin Libraries. Data can be streamed to Gephi for visualization purpose. This requires Gephi 0.9.2 to be installed with the Streaming plugin configured for http://localhost:7474 (when installed on same system as Neo4j).
+This prototype is based on Neo4j Desktop - Neo4j 3.3.5 and makes use of Neo4j "APOC" and "Graph Alogroritms" plugin Libraries. Data can be streamed to Gephi for visualization purpose. This requires Gephi 0.9.2 to be installed with the Streaming plugin configured for http://localhost:7474 (when installed on same system as Neo4j).
 
 Implemented node types and properties:
 - User
@@ -34,12 +34,13 @@ Files:
 - epp bnf ngac.txt: bnf grammer notation for event processing patterns
 
 Installation:
-1) install neo4j 3.3.4
-2) create database
+1) install Neo4j Desktop
+2) create database based on Neo4j 3.3.5
 3) install apoc and graph algorithms plugins
-4) place ngac_nodes.csv and ngac_rels.csv in the Neo4j import directory
-5) start neo4j and open browser
-6) run the cypher code snippits from the ngac.cql file   (one part at the time) through the browser to create indices, import data, set analytical properties and run some permission queries
+4) place ngac_nodes_v05.csv and ngac_rels_v05.csv in the Neo4j import directory
+5) start database
+6) start neo4j and open browser (http://localhost:7474)
+7) run the cypher code snippits from the ngac_v05.cql file   (one part at the time) through the browser to create indices, import data, set analytical properties and run some permission queries - one can store these in the browser
 
 Create Indices:
 
@@ -59,7 +60,7 @@ Import Nodes:
     // Name;Labels;Data Source;Status
     USING PERIODIC COMMIT
     LOAD CSV WITH HEADERS
-    FROM 'file:///ngac_nodes.csv' AS line FIELDTERMINATOR ';'
+    FROM 'file:///ngac_nodes_v05.csv' AS line FIELDTERMINATOR ';'
     //
     MERGE (n { name: line.`Name`, labels: line.`Labels`, datasource: line.`Data Source`, status: line.`Status`})
     with n,line
@@ -77,7 +78,7 @@ Import Relationships:
     // From Node;Relationship Type;To Node;Permission;Data Source;Status;Weight
     USING PERIODIC COMMIT
     LOAD CSV WITH HEADERS
-    FROM 'file:///ngac_rels.csv' AS line FIELDTERMINATOR ';'
+    FROM 'file:///ngac_rels_v05.csv' AS line FIELDTERMINATOR ';'
     MATCH (n1 {name: line.`From Node`})
     MATCH (n2 {name: line.`To Node`})
     WITH line, n1,n2
