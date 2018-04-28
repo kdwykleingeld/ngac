@@ -26,9 +26,9 @@ Implemented relationship types:
 
 Files:
 
-- ngac.cql file:    contains Cypher Commands to create indices, nodes , relationships, analytical data and authorization quieries
-- ngac_nodes.csv:   contains nodes to be imported
-- ngac_rels:        containes relationships to be imported
+- ngac_v05.cql file:    contains Cypher Commands to create indices, nodes , relationships, analytical data and authorization quieries
+- ngac_nodes_v05.csv:   contains nodes to be imported
+- ngac_rels_v05:        containes relationships to be imported
 - datamodel.jpg:    the datamodel
 - testdata.jpg:     visual overview of the data
 - epp bnf ngac.txt: bnf grammer notation for event processing patterns
