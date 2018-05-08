@@ -187,15 +187,19 @@ Query Permissions for all users
     OPTIONAL MATCH (u)-[:ASSIGNED_TO*]->(:UserAttribute)-[p4:PROHIBITION_ON]->(o)
     WITH 	
         u.name AS Users,
-     	o.name AS Objects,
+        o.name AS Objects,
         COLLECT(DISTINCT SPLIT(apoc.text.join([p1.permission,p2.permission,p3.permission,p4.permission],","), ',')) AS Prohibitions,
     	COLLECT(DISTINCT SPLIT(r.permission, ',')) AS Permissions,
     	COLLECT(DISTINCT oa.name) AS ObjectAttributes,
     	COLLECT(DISTINCT opc.name) AS ObjectPolicyClasses,
     	COLLECT(DISTINCT oapc.name) AS ObjectAttributePolicyClasses
         WHERE ObjectPolicyClasses = ObjectAttributePolicyClasses AND ([item in Permissions WHERE NOT item in Prohibitions] OR Prohibitions IS NULL)
-	    WITH Users, Objects, reduce(result=HEAD(Permissions), s in TAIL(Permissions) | result+s) as CombinedPermissions,
-    	reduce(result1=HEAD(Prohibitions), s in TAIL(Prohibitions) | result1+s) as CombinedProhibitions
+	WITH Users,
+	Objects,
+	reduce(result=HEAD(Permissions),
+	s in TAIL(Permissions) | result+s) as CombinedPermissions,
+    	reduce(result1=HEAD(Prohibitions),
+	s in TAIL(Prohibitions) | result1+s) as CombinedProhibitions
         RETURN Users, CombinedPermissions, Objects, CombinedProhibitions,
         CASE WHEN CombinedProhibitions IS NULL THEN CombinedPermissions
              ELSE [item in CombinedPermissions WHERE NOT item IN CombinedProhibitions] END AS ResultingPermission       
