@@ -57,18 +57,25 @@ Create Indices:
 Import Nodes:
 
     // Create Nodes
-    // Name;Labels;Data Source;Status
+    // Name;Labels;Data Source;Status;Protected Resource;Empoyee Number;Screening Level;Email Address;Phone Number
     USING PERIODIC COMMIT
     LOAD CSV WITH HEADERS
     FROM 'file:///ngac_nodes_v05.csv' AS line FIELDTERMINATOR ';'
-    //
-    MERGE (n { name: line.`Name`, labels: line.`Labels`, datasource: line.`Data Source`, status: line.`Status`})
+    ///
+    MERGE (n { name: line.`Name`, labels: line.`Labels`})
     with n,line
     //
     MATCH (n)
     call apoc.create.addLabels([ id(n) ], [ n.labels ]) yield node
     set n.uuid = apoc.create.uuid()
     set n.created = apoc.date.currentTimestamp()
+    set n.datasource = line.`Data Source`
+    set n.status = line.`Status`
+    set n.resource = line.`Protected Resource`
+    set n.empno = line.`Employee Number`
+    set n.screening = line.`Screening Level`
+    set n.email = line.`Email Address`
+    set n.phone = line.`Phone Number`
     with node
     remove node.labels
 
@@ -170,21 +177,24 @@ Run Node Network Analytics report
 Query Permissions for all users
 
     // Query NGAC Permissions WITH Prohibitions 
-    MATCH (u:User)-[:ASSIGNED_TO|ASSOCIATED_TO*]->(ua:UserAttribute)-[r:ASSOCIATED_TO]->(oa:ObjectAttribute)
+    MATCH (u:User)-[:ASSIGNED_TO*]->(ua:UserAttribute)-[r:ASSOCIATED_TO]->(oa:ObjectAttribute)
     MATCH (oa)<-[:ASSIGNED_TO*]-(o:Object)
     MATCH (o)-[:ASSIGNED_TO*]->(opc:PolicyClass)
     MATCH (oa)-[:ASSIGNED_TO*]->(oapc:PolicyClass)
-    OPTIONAL MATCH (u)-[p:PROHIBITION_ON]->(o)
+    OPTIONAL MATCH (u)-[:ASSIGNED_TO*]->(:UserAttribute)-[p1:PROHIBITION_ON]->(:ObjectAttribute)<-[:ASSIGNED_TO*]-(o)
+    OPTIONAL MATCH (u)-[p2:PROHIBITION_ON]->(:ObjectAttribute)<-[:ASSIGNED_TO*]-(o)
+    OPTIONAL MATCH (u)-[p3:PROHIBITION_ON]->(o)
+    OPTIONAL MATCH (u)-[:ASSIGNED_TO*]->(:UserAttribute)-[p4:PROHIBITION_ON]->(o)
     WITH 	
         u.name AS Users,
-    	o.name AS Objects,
-        COLLECT(DISTINCT SPLIT(p.permission, ',')) AS Prohibitions,
+     	o.name AS Objects,
+        COLLECT(DISTINCT SPLIT(apoc.text.join([p1.permission,p2.permission,p3.permission,p4.permission],","), ',')) AS Prohibitions,
     	COLLECT(DISTINCT SPLIT(r.permission, ',')) AS Permissions,
     	COLLECT(DISTINCT oa.name) AS ObjectAttributes,
     	COLLECT(DISTINCT opc.name) AS ObjectPolicyClasses,
     	COLLECT(DISTINCT oapc.name) AS ObjectAttributePolicyClasses
         WHERE ObjectPolicyClasses = ObjectAttributePolicyClasses AND ([item in Permissions WHERE NOT item in Prohibitions] OR Prohibitions IS NULL)
-    	WITH Users, Objects, reduce(result=HEAD(Permissions), s in TAIL(Permissions) | result+s) as CombinedPermissions,
+	    WITH Users, Objects, reduce(result=HEAD(Permissions), s in TAIL(Permissions) | result+s) as CombinedPermissions,
     	reduce(result1=HEAD(Prohibitions), s in TAIL(Prohibitions) | result1+s) as CombinedProhibitions
         RETURN Users, CombinedPermissions, Objects, CombinedProhibitions,
         CASE WHEN CombinedProhibitions IS NULL THEN CombinedPermissions
